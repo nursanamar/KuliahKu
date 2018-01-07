@@ -28,7 +28,7 @@ class Login extends Component {
                         error: data.desc
                     });
                 }else{
-                    this.props.login(data.data.user.name,data.data.token);
+                    this.props.login(data.data.user,data.data.token);
                 }
             }.bind(this),function(err){
 	    	this.setState({

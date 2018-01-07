@@ -15,12 +15,26 @@ export default class App extends React.Component {
     }
   }
 
-  componentDidMount(){
-    AppState.addEventListener('change',this.handleChange);
+  // componentDidMount(){
+  //   AppState.addEventListener('change',this.handleChange);
+  // }
+  
+  componentWillMount(){
+    try {
+      AsyncStorage.getItem('nim').done((nim) => {
+        this.setState({
+          isLogin: nim
+        });
+      });
+    } catch (error) {
+      
+    }
   }
+	
 
   componentWillUnmount(){
-    AppState.removeEventListener('change',this.handleChange);
+    // AppState.removeEventListener('change',this.handleChange);
+    this.logout();
   }
 
   handleChange(status){
@@ -42,9 +56,9 @@ export default class App extends React.Component {
 
   login(user,token){
     console.log('inputan user',user)
-    AsyncStorage.multiSet([['user',user],['token',token]]).then(() => {
+    AsyncStorage.multiSet([['nim',user.nim],['name',user.nama],['token',token]]).then(() => {
       this.setState({
-        isLogin: user
+        isLogin: user.nim
       })
     })
   }

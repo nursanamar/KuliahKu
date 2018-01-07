@@ -13,7 +13,7 @@ export default class Header extends React.Component  {
           <Text style={header.headerText}>kuliahKu</Text>
         </View>
         <View>
-          {/* <Icon.ToolbarAndroid
+          {/* <ToolbarAndroid
             title="Home"
             titleColor="white"
             navIconName="md-arrow-back"
@@ -24,8 +24,9 @@ export default class Header extends React.Component  {
             ]}
             overflowIconName="md-more"
           /> */}
-          <Icon
-            name='log-out' type="entypo" color='#fff' />
+          <Button title="logout" onPress={() => { this.props.logout() }} />
+          {/* <Icon
+            name='log-out' type="entypo" color='#fff' /> */}
         </View>
       </View>
     );
