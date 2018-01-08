@@ -10,7 +10,7 @@ export default class Tmbody extends Component {
         super(props)
     }
     render() {
-        var data = getData('tomorrow');
+        var data = [];
         var lists = [];
         data.forEach((data,key) => {
             lists.push(

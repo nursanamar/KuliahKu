@@ -6,26 +6,52 @@ import Profil from '../profil/Body';
 import {getData} from '../../config/Api';
 // create a component
 export default class Tbody extends Component {
-    render() {
-        var data = getData('today');
-        var lists = [];
-        data.forEach((data,key) => {
-            lists.push(<TouchableOpacity key={key} onPress={() => {
-                        this.props.navigation.navigate('profil',{data:data})
-                    }} >
-                    <List
-                        matkul={data.matkul}
-                        dosen={data.dosen}
-                        time={data.time}
-                        room={data.room}
-                        status={data.status}
-                    />
-                </TouchableOpacity>)
+    constructor(props){
+        super(props);
+        this.state = {
+            data : [],
+            status : '',
+        }
+    }
+
+    componentDidMount(){
+        let status = <Text>Loading</Text>;
+        this.setState({
+            status : status
+        });
+
+        AsyncStorage.getItem('token').done((token) => {
+            getData(token,function(res) {
+                var data = res;
+                var lists = [];
+                data.forEach((data,key) => {
+                    lists.push(<TouchableOpacity key={key} onPress={() => {
+                                this.props.navigation.navigate('profil',{data:data})
+                            }} >
+                            <List
+                                matkul={data.matkul}
+                                dosen={data.dosen}
+                                time={data.time}
+                                room={data.room}
+                                status={data.status}
+                            />
+                        </TouchableOpacity>)
+                })
+                this.setState({
+                    data : lists,
+                    status : ''
+                })
+            }.bind(this))
         })
+    }
+
+    render() {
+        
         return (
             <View style={styles.container}>
+                {/* {this.state.status} */}
                 <ScrollView>
-                   {lists}
+                   {this.state.data}
                 </ScrollView>
             </View>
         );

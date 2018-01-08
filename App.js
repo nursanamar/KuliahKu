@@ -47,7 +47,7 @@ export default class App extends React.Component {
   }
 
   logout(){
-    AsyncStorage.multiRemove(['user','token']).then(() => {
+    AsyncStorage.multiRemove(['nim','user','token']).then(() => {
       this.setState({
         isLogin: null
       })
