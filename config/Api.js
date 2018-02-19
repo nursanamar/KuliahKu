@@ -1,3 +1,4 @@
+import PushNotification from 'react-native-push-notification';
 
 // export function getData(when){
 //     var data;
@@ -126,3 +127,11 @@ export function authUser(nim,pass,callback,errcalback){
     	errcalback(err);
     });
 }
+
+export function fireNotif(msg){
+    PushNotification.localNotification({
+      message: msg, // (required)
+      
+    });
+  }
+

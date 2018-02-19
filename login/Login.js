@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TextInput, Button, TouchableOpacity, AsyncStorage } from 'react-native';
+import { ActivityIndicator,View, Text, StyleSheet, TextInput, Button, TouchableOpacity, AsyncStorage } from 'react-native';
 import setSession from './Logic';
 import {authUser} from '../config/Api';
 // create a component
@@ -51,10 +51,14 @@ class Login extends Component {
                         this.login();
                         }} >
                         <View style={styles.button} >
-                            <Text style={{color: '#fff'}} >Login</Text>
+                        {
+                            (this.state.error === null) ? 
+                                <Text style={{ color: '#fff' }} >Login</Text>
+                                :
+                                <ActivityIndicator color='#fff' />
+                        }                        
                         </View>
                     </TouchableOpacity>
-                    <Text>{this.state.error}</Text>
                 </View>
             </View>
         );
