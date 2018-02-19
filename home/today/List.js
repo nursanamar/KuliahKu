@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
         paddingBottom: 5
     },
     statusTextRed: {
-        color: 'red',
-        backgroundColor: '#308954',
+        color: '#fff',
+        backgroundColor: 'red',
         marginRight: 15,
         paddingLeft: 10,
         paddingRight: 10,
