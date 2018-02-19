@@ -5,7 +5,12 @@ import Header from './home/Header';
 import Login from './login/Login';
 import PushNotif from './config/PushNotif';
 import PushNotification from 'react-native-push-notification';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import {jadwalReducer} from './config/reducers/Main';
+import {getData} from './config/Api';
 
+var store = createStore(jadwalReducer);
 
 export default class App extends React.Component {
   constructor(props){
@@ -21,10 +26,16 @@ export default class App extends React.Component {
   
   componentWillMount(){
     try {
-      AsyncStorage.getItem('nim').done((nim) => {
+      AsyncStorage.multiGet(['nim','token']).done((nim) => {
         this.setState({
-          isLogin: nim
+          isLogin: nim[0][1]
         });
+        if(nim[1][1] !== null){
+          getData(nim[1][1],(res) => {
+            console.log('Ambil data',res);
+            store.dispatch({type : 'FETCH',data: res})
+          })
+        }
       });
     } catch (error) {
       
@@ -60,6 +71,9 @@ export default class App extends React.Component {
       this.setState({
         isLogin: user.nim
       })
+      getData(token,(res) => {
+        store.dispatch({type: 'FETCH',data: res})
+      })
     })
   }
 
@@ -67,11 +81,13 @@ export default class App extends React.Component {
 
   render() {
     return (this.state.isLogin !== null) ? (
-     <View style={styles.container} >
-        <Header logout={this.logout.bind(this)} />
-        <MainStack />
-        <PushNotif />
-    </View>
+      <Provider store={store}>
+        <View style={styles.container} >
+          <Header logout={this.logout.bind(this)} />
+          <MainStack />
+          <PushNotif />
+        </View>
+      </Provider>
     ): (
         <View style={styles.container} >
           <Login login={this.login.bind(this)} />

@@ -90,7 +90,7 @@
 //     }
 //     return data;
 // }
-var host = 'http://192.168.0.2/kuliahku/index.php';
+var host = 'http://192.168.93.2/kuliahku/index.php';
 
 export function getData(token,onSucces,onError = function(){}){
     fetch(host+'/jadwal',{
