@@ -91,7 +91,7 @@ import PushNotification from 'react-native-push-notification';
 //     }
 //     return data;
 // }
-var host = 'http://192.168.93.2/kuliahku/index.php';
+var host = 'https://boiling-island-33613.herokuapp.com/index.php';
 
 export function getData(token,onSucces,onError = function(){}){
     fetch(host+'/jadwal',{

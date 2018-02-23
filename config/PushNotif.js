@@ -6,9 +6,13 @@ import PushNotification from 'react-native-push-notification';
 class PushNotif extends Component {
     componentDidMount(){
         PushNotification.configure({
+            onRegister: function(token) {
+                console.log(token);
+              },
             onNotification: (notification) => {
                 console.log('Notification',notification);
-            }
+            },
+            senderID : "1053670299115"
         })
     }
     render() {
