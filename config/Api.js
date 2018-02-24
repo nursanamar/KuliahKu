@@ -1,5 +1,4 @@
-import PushNotification from 'react-native-push-notification';
-
+import FCM from 'react-native-fcm';
 // export function getData(when){
 //     var data;
 //     if(when === 'today'){
@@ -129,9 +128,8 @@ export function authUser(nim,pass,callback,errcalback){
 }
 
 export function fireNotif(msg){
-    PushNotification.localNotification({
-      message: msg, // (required)
-      
-    });
+    FCM.presentLocalNotification({
+        ...msg
+    })
   }
 

@@ -10,9 +10,19 @@ import {Provider} from 'react-redux';
 import {jadwalReducer} from './config/reducers/Main';
 import {getData,fireNotif} from './config/Api';
 import Splash from './Splash';
+import FCM, {FCMEvent} from 'react-native-fcm';
 
 var store = createStore(jadwalReducer);
 var ws;
+
+FCM.on(FCMEvent.Notification, async (notif) => {
+  console.log("App.js",notif);
+});
+
+FCM.on(FCMEvent.RefreshToken, (token) => {
+  console.log("fcm",token)
+  // fcm token may not be available on first load, catch it here
+});
 
 export default class App extends React.Component {
   constructor(props){
