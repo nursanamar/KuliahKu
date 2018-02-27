@@ -66,6 +66,15 @@ export default class App extends React.Component {
        }
      }
    }
+
+
+  updateData(){
+    AsyncStorage.getItem('token').done(token => {
+      getData(token,res => {
+        store.dispatch({type : 'FETCH',data: res})
+      })
+    })
+  }
   
   componentWillMount(){
     try {
@@ -124,7 +133,7 @@ export default class App extends React.Component {
         <View style={styles.container} >
           <Header logout={this.logout.bind(this)} />
           <MainStack />
-          <PushNotif />
+          <PushNotif doUpdate={this.updateData.bind(this)} />
         </View>
       </Provider>
     ): (

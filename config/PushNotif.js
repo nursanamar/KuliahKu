@@ -11,13 +11,14 @@ class PushNotif extends Component {
             // store fcm token in your server
         });
 
-        this.notificationListener = FCM.on(FCMEvent.Notification, async (notif) => {
+        this.notificationListener = FCM.on(FCMEvent.Notification, async function(notif) {
             console.log("PushNotif",notif.fcm.body);
             fireNotif({
                 body : notif.fcm.body,
                 // show_in_foreground
             });
-        });
+            this.props.doUpdate();
+        }.bind(this));
         
         // initial notification contains the notification that launchs the app. If user launchs app by clicking banner, the banner notification info will be here rather than through FCM.on event
         // sometimes Android kills activity when app goes to background, and when resume it broadcasts notification before JS is run. You can use FCM.getInitialNotification() to capture those missed events.
