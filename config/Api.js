@@ -129,7 +129,8 @@ export function authUser(nim,pass,callback,errcalback){
 
 export function fireNotif(msg){
     FCM.presentLocalNotification({
-        ...msg
+        ...msg,
+        show_in_foreground : true
     })
   }
 
