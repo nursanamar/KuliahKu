@@ -8,8 +8,10 @@ import FCM, {FCMEvent} from 'react-native-fcm';
 class PushNotif extends Component {
     componentDidMount(){
         FCM.getFCMToken().then(id => {
+            console.log("token dari get ",id);
             AsyncStorage.getItem('token').done(token => {
                 storeToken(token,id);
+                this.props.notifId(id);
             })
         });
 
@@ -22,9 +24,11 @@ class PushNotif extends Component {
             this.props.doUpdate();
         }.bind(this));
 
-        FCM.on(FCMEvent.RefreshToken, (token) => {
+        FCM.on(FCMEvent.RefreshToken, (id) => {
+            console.log("token dari listen ",id);            
             AsyncStorage.getItem('token').done(token => {
                 storeToken(token,id);
+                this.props.notifId(id);                
             })
             // fcm token may not be available on first load, catch it here
           });

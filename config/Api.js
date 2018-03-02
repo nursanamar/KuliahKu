@@ -135,15 +135,29 @@ export function fireNotif(msg){
   }
 
 export function storeToken(token,id){
+    console.log("dari store token ",id);
     fetch(host+'/token',{
         method: 'POST',
         headers: {
             'content-type':'application/json',
             'Authorization' : 'Bearer '+token
         },
-        data : JSON.stringify({
+        body: JSON.stringify({
             "token" : id,
         })
-    });
+    })
+}
+
+export function removeToken(token,notifId){
+    fetch(host+"/removeToken",{
+        method : 'POST',
+        headers : {
+            'content-type':'application/json',
+            'Authorization' : 'Bearer '+token
+        },
+        body: JSON.stringify({
+            token :notifId,
+        })
+    })
 }
 

@@ -8,23 +8,21 @@ import PushNotification from 'react-native-push-notification';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {jadwalReducer} from './config/reducers/Main';
-import {getData,fireNotif} from './config/Api';
+import {getData,fireNotif,removeToken} from './config/Api';
 import Splash from './Splash';
 import FCM, {FCMEvent} from 'react-native-fcm';
 
 var store = createStore(jadwalReducer);
 var ws;
 
-FCM.on(FCMEvent.Notification, async (notif) => {
-  console.log("App.js",notif);
-});
 
 export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       isLogin : null,
-      initial : true
+      initial : true,
+      notifId : null,
     }
   }
 
@@ -70,6 +68,12 @@ export default class App extends React.Component {
       })
     })
   }
+
+  setNotifId(notifId){
+    this.setState({
+      notifId : notifId,
+    })
+  }
   
   componentWillMount(){
     try {
@@ -92,13 +96,12 @@ export default class App extends React.Component {
   }
 	
 
-  componentWillUnmount(){
-    // AppState.removeEventListener('change',this.handleChange);
-    this.logout();
-  }
-
 
   logout(){
+    AsyncStorage.getItem('token').done(token => {
+      console.log(this.state.notifId);
+      removeToken(token,this.state.notifId);
+    })
     AsyncStorage.multiRemove(['nim','user','token']).then(() => {
       this.setState({
         isLogin: null
@@ -128,7 +131,7 @@ export default class App extends React.Component {
         <View style={styles.container} >
           <Header logout={this.logout.bind(this)} />
           <MainStack />
-          <PushNotif doUpdate={this.updateData.bind(this)} />
+          <PushNotif notifId={this.setNotifId.bind(this)} doUpdate={this.updateData.bind(this)} />
         </View>
       </Provider>
     ): (
