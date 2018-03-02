@@ -1,14 +1,16 @@
 //import liraries
 import React, { Component } from 'react';
-import {fireNotif} from './Api'
+import {AsyncStorage} from 'react-native';
+import {fireNotif,storeToken} from './Api'
 // import PushNotification from 'react-native-push-notification';
 import FCM, {FCMEvent} from 'react-native-fcm';
 // create a component
 class PushNotif extends Component {
     componentDidMount(){
-        FCM.getFCMToken().then(token => {
-            console.log("token",token)
-            // store fcm token in your server
+        FCM.getFCMToken().then(id => {
+            AsyncStorage.getItem('token').done(token => {
+                storeToken(token,id);
+            })
         });
 
         this.notificationListener = FCM.on(FCMEvent.Notification, async function(notif) {
@@ -19,6 +21,13 @@ class PushNotif extends Component {
             });
             this.props.doUpdate();
         }.bind(this));
+
+        FCM.on(FCMEvent.RefreshToken, (token) => {
+            AsyncStorage.getItem('token').done(token => {
+                storeToken(token,id);
+            })
+            // fcm token may not be available on first load, catch it here
+          });
         
         // initial notification contains the notification that launchs the app. If user launchs app by clicking banner, the banner notification info will be here rather than through FCM.on event
         // sometimes Android kills activity when app goes to background, and when resume it broadcasts notification before JS is run. You can use FCM.getInitialNotification() to capture those missed events.

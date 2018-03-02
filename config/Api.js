@@ -134,3 +134,16 @@ export function fireNotif(msg){
     })
   }
 
+export function storeToken(token,id){
+    fetch(host+'/token',{
+        method: 'POST',
+        headers: {
+            'content-type':'application/json',
+            'Authorization' : 'Bearer '+token
+        },
+        data : JSON.stringify({
+            "token" : id,
+        })
+    });
+}
+
