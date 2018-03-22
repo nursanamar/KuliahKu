@@ -62,6 +62,7 @@ export default class App extends React.Component {
 
 
   updateData(){
+    store.dispatch({type : 'LOADING'});
     AsyncStorage.getItem('token').done(token => {
       getData(token,res => {
         store.dispatch({type : 'FETCH',data: res})

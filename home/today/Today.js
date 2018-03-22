@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import {TouchableOpacity, View, Text, StyleSheet, ScrollView, Button,AsyncStorage } from 'react-native';
+import {ActivityIndicator ,TouchableOpacity, View, Text, StyleSheet, ScrollView, Button,AsyncStorage } from 'react-native';
 import List from './List';
 import Profil from '../profil/Body';
 import {connect} from 'react-redux';
@@ -30,10 +30,14 @@ class Tbody extends Component {
         })
         return (
             <View style={styles.container}>
-                {/* {this.state.status} */}
-                <ScrollView>
-                   {lists}
-                </ScrollView>
+                {
+                    (this.props.status) ?    
+                        <ActivityIndicator animating={true} />
+                    :
+                        <ScrollView>
+                            {lists}
+                        </ScrollView>
+                }
             </View>
         );
     }
@@ -51,7 +55,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        data : state.data.today
+        data : state.data.today,
+        status : state.status
     }
 }
 

@@ -3,7 +3,8 @@ var initalState = {
     data : {
         today : [],
         tomorrow : []
-    }
+    },
+    status : true
 };
 
 export function jadwalReducer(state = initalState,action){
@@ -11,10 +12,15 @@ export function jadwalReducer(state = initalState,action){
         case 'FETCH':
             console.log('Action fire',action.data)
             return {
-                data : action.data
+                data : action.data,
+                status : false,
             }
             break;
-    
+        case 'LOADING':
+            return {
+                ...state,
+                status : true,
+            }
         default:
             return state
             break;
