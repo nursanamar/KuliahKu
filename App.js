@@ -11,12 +11,13 @@ import {jadwalReducer} from './config/reducers/Main';
 import {getData,fireNotif,removeToken} from './config/Api';
 import Splash from './Splash';
 import FCM, {FCMEvent} from 'react-native-fcm';
+import codePush from "react-native-code-push";
 
 var store = createStore(jadwalReducer);
 var ws;
 
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -150,3 +151,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#5b8930'
   }
 })
+
+export default codePush({ updateDialog: true, installMode: codePush.InstallMode.IMMEDIATE })(App);

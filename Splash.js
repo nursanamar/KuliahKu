@@ -12,7 +12,6 @@ class Splash extends Component {
                 <View style={styles.login}>
                     <Text style={{color: '#fff',fontSize: 40}}>kuliah<Text style={{color: '#fff',fontSize: 40,fontWeight: 'bold'}}>K</Text>u</Text>
                 </View>
-                <ActivityIndicator />
             </View>
         );
     }
