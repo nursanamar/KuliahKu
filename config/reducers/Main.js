@@ -2,7 +2,8 @@
 var initalState = {
     data : {
         today : [],
-        tomorrow : []
+        tomorrow : [],
+        all : [],
     },
     status : true
 };

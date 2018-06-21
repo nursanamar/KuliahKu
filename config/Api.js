@@ -102,7 +102,20 @@ export function getData(token,onSucces,onError = function(){}){
     }).then((respon) => {
         return respon.json();
     }).then((json) => {
-        onSucces(json);
+        fetch(host + '/all', {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        }).then((res) => {
+            return res.json();
+        }).then((res) => {
+            let result = {
+                ...json,
+                all: res
+            }
+            onSucces(result);
+        })
     }).catch((err) => {
         onError(err);
     })
