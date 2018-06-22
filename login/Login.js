@@ -11,6 +11,7 @@ class Login extends Component {
             user: '',
             pass: '',
             error: null,
+            isLoading:false,
         }
     }
 
@@ -19,13 +20,14 @@ class Login extends Component {
             return
         }else{
 	    this.setState({
-	    	error : 'loading.....'
+	    	isLoading : true
 	    });	
             authUser(this.state.user,this.state.pass,function(data) {
                 console.log(data);
                 if(data.status === 'failed'){
                     this.setState({
-                        error: data.desc
+                        error: data.desc,
+                        isLoading:false
                     });
                 }else{
                     this.props.login(data.data.user,data.data.token);
@@ -52,13 +54,14 @@ class Login extends Component {
                         }} >
                         <View style={styles.button} >
                         {
-                            (this.state.error === null) ? 
+                            !(this.state.isLoading) ? 
                                 <Text style={{ color: '#fff' }} >Login</Text>
                                 :
                                 <ActivityIndicator color='#fff' />
                         }                        
                         </View>
                     </TouchableOpacity>
+                    <Text>{this.state.error}</Text>
                 </View>
             </View>
         );
